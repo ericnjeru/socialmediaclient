@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Social Media Client</string>
+    <string name="task_title">My Messages</string>
+    <string name="add_task_title">Add new message</string>
+    <string name="edit_task_title">Edit message</string>
+    <string name="btn_done">Done</string>
+    <string name="edit_title">Title</string>
+    <string name="edit_desc">Message Body</string>
+    <string name="edit_pwd">Password</string>
+    <string name="toolbar_pwd">Enter Password</string>
+    <string name="encrypt">Lock message</string>
+    <string name="item_note">View message</string>
+    <string name="empty_messages">Messages added will display here.\nTap on Add to create one.</string>
+
+    <string name="pwd_title">Enter password</string>
+    <string name="error_pwd">Incorrect password</string>
+    <string name="add_image">Choose image</string>
+    <string name="update_image">Update image</string>
+    <string name="search_hint">Start typing to search</string>
+    <string name="action_search">Search</string>
+
+</resources>
