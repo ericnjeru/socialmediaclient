@@ -1,5 +1,8 @@
 package com.social.media.socialmediaclient.ui.adapter;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,33 +10,42 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.widget.Filter;
 import android.widget.Filterable;
+
 import com.social.media.socialmediaclient.R;
 import com.social.media.socialmediaclient.model.Message;
 import com.social.media.socialmediaclient.util.AppUtils;
 import com.social.media.socialmediaclient.util.MessageDiffUtil;
 
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static androidx.core.content.ContextCompat.getColor;
 
 public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapter.CustomViewHolder>
         implements Filterable{
 
-    private List<Message> messages;
-    private List<Message> messageFiltered;
+    public List<Message> messages;
+    public List<Message> messageFiltered;
+    public List<Message> messageSelected;
     private Observer<List<Message>> context;
-    
-    public MessagesListAdapter(Observer<List<Message>> context, List<Message> messages) {
+    Context mContext;
+
+    public MessagesListAdapter(Observer<List<Message>> context, List<Message> messages, List<Message> messageSelected) {
 
         this.context = context;
         this.messages = messages;
         this.messageFiltered = messages;
+        this.messageSelected = messageSelected;
     }
 
     @NonNull
@@ -51,13 +63,18 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
         holder.itemTime.setText(AppUtils.getFormattedDateString(message.getCreatedAt()));
         loadImageFromDB(message,holder.itemImage);
 
+        if(messageSelected.contains(message)) {
+            holder.view.setBackgroundColor(holder.view.getContext().getResources().getColor(R.color.fab_color));
+        }else {
+            holder.view.setBackgroundColor(holder.view.getContext().getResources().getColor(R.color.bg_layout));
+        }
+
         if(message.isEncrypt()) {
             holder.itemTime.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_lock, 0);
 
         } else {
             holder.itemTime.setCompoundDrawablesWithIntrinsicBounds(0,0, 0, 0);
         }
-
 
     }
 
@@ -118,22 +135,14 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
 
         private TextView itemTitle, itemTime;
         private AppCompatImageView itemImage;
+        private View view;
         CustomViewHolder(View itemView) {
             super(itemView);
-
+            view = itemView.findViewById(R.id.my_itemlist_view);
             itemTitle = itemView.findViewById(R.id.item_title);
             itemImage = itemView.findViewById(R.id.featured_img);
             itemTime = itemView.findViewById(R.id.item_desc);
 
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    // send selected drug in callback
-//                    try {
-//                        listener.onMessageSelected(messageFiltered.get(getAdapterPosition()));
-//                    }catch (Exception ignored){}
-//                }
-//            });
         }
     }
 

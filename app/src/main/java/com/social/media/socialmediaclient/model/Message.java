@@ -35,6 +35,7 @@ public class Message implements Serializable {
 
     private boolean encrypt;
     private String password;
+    private boolean isSelected = false;
 
     public int getId() {
         return id;
@@ -100,5 +101,14 @@ public class Message implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+
+    public boolean isSelected() {
+        return isSelected;
     }
 }

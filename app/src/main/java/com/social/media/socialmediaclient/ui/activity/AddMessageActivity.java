@@ -17,6 +17,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -153,6 +154,8 @@ public class AddMessageActivity extends AppCompatActivity implements CompoundBut
                 selectedImageUri = data.getData();
                 if (null != selectedImageUri) {
                     msgImage.setImageURI(selectedImageUri);
+                    msgImage.setVisibility(View.VISIBLE);
+                    msgAddImg.setText("change Image");
                 }
             }
         }
@@ -187,10 +190,19 @@ public class AddMessageActivity extends AppCompatActivity implements CompoundBut
             finish();
             overridePendingTransition(R.anim.stay, R.anim.slide_down);
 
-        } else if (view == msgAddImg){
+        }
+        else if (view == msgAddImg){
             openImageChooser();
         }
         else if(view == btnDone) {
+            if (editTitle.getText().toString().isEmpty() || editDesc.getText().toString().isEmpty()){
+                Toast.makeText(this, "Please fill all the fields first", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if(selectedImageUri == null) {
+                Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show();
+                return;
+            }
             Intent intent = getIntent();
             if(message != null) {
                 message.setTitle(editTitle.getText().toString());
@@ -219,12 +231,14 @@ public class AddMessageActivity extends AppCompatActivity implements CompoundBut
             } else {
                 InputStream iStream = null;
                 byte[] inputData = new byte[0];
-                try {
-                    iStream = getContentResolver().openInputStream(selectedImageUri);
-                    assert iStream != null;
-                    inputData = AppUtils.getBytes(iStream);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (selectedImageUri != null){
+                    try {
+                        iStream = getContentResolver().openInputStream(selectedImageUri);
+                        assert iStream != null;
+                        inputData = AppUtils.getBytes(iStream);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 intent.putExtra(INTENT_TITLE, editTitle.getText().toString());

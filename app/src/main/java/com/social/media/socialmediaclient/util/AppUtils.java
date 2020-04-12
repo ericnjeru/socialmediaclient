@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 public class AppUtils {
@@ -34,14 +35,14 @@ public class AppUtils {
 
         try {
 
-            SimpleDateFormat spf = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
+            SimpleDateFormat spf = new SimpleDateFormat("EEE MMM d HH:mm zzz yyyy", Locale.US);
             String dateString = spf.format(date);
 
             Date newDate = spf.parse(dateString);
-            spf = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
+            spf = new SimpleDateFormat("dd MMM yyyy HH:mm",Locale.US);
             return spf.format(newDate);
 
-        } catch (ParseException e) {
+        } catch (ParseException | NullPointerException e) {
             e.printStackTrace();
         }
         return null;
@@ -53,8 +54,7 @@ public class AppUtils {
             md = MessageDigest.getInstance("SHA-512");
             md.update(password.getBytes());
             byte byteData[] = md.digest();
-            String base64 = Base64.encodeToString(byteData, Base64.NO_WRAP);
-            return base64;
+            return Base64.encodeToString(byteData, Base64.NO_WRAP);
 
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -80,7 +80,10 @@ public class AppUtils {
 
     public static void hideKeyboard(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(activity.getCurrentFocus()).getWindowToken(), 0);
+        if (inputMethodManager != null) {
+            inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(activity.getCurrentFocus()).getWindowToken(), 0);
+        }
+
     }
 
     //image operations

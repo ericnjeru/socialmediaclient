@@ -14,14 +14,16 @@
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="0.2dp"
         app:cardElevation="2dp"
-        app:cardPreventCornerOverlap="true">
+        app:cardPreventCornerOverlap="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:id="@+id/my_itemlist_view">
 
 
         <FrameLayout
-            android:id="@+id/view_unlocked"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
             android:orientation="vertical">
 
 

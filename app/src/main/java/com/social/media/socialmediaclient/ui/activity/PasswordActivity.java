@@ -85,7 +85,7 @@ public class PasswordActivity extends AppCompatActivity implements View.OnClickL
         } else if(view == btnDone) {
             //Evaluate the password
             if(message.getPassword().equals(AppUtils.generateHash(editPwd.getText().toString()))) {
-                NavigatorUtils.redirectToViewNoteScreen(this, message);
+                NavigatorUtils.redirectToEditViewMessageScreen(this, message);
 
             } else AppUtils.showMessage(getApplicationContext(), getString(R.string.error_pwd));
         }

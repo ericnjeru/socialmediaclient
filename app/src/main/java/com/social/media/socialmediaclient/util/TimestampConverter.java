@@ -6,11 +6,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class TimestampConverter {
 
-    private static DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 
     @TypeConverter
     public static Date fromTimestamp(String value) {
@@ -19,7 +20,7 @@ public class TimestampConverter {
                 TimeZone timeZone = TimeZone.getTimeZone("IST");
                 df.setTimeZone(timeZone);
                 return df.parse(value);
-            } catch (ParseException e) {
+            } catch (ParseException | NumberFormatException | ArrayIndexOutOfBoundsException e) {
                 e.printStackTrace();
             }
             return null;

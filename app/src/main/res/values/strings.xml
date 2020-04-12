@@ -3,7 +3,9 @@
     <string name="task_title">My Messages</string>
     <string name="add_task_title">Add new message</string>
     <string name="edit_task_title">Edit message</string>
+    <string name="view_task_title">Message Detail</string>
     <string name="btn_done">Done</string>
+    <string name="btn_share">Share</string>
     <string name="edit_title">Title</string>
     <string name="edit_desc">Message Body</string>
     <string name="edit_pwd">Password</string>
@@ -18,5 +20,8 @@
     <string name="update_image">Update image</string>
     <string name="search_hint">Start typing to search</string>
     <string name="action_search">Search</string>
+    <string name="msg_title">Title</string>
+    <string name="msg_body_text">Message Body</string>
+    <string name="date_published">Date Published</string>
 
 </resources>
