@@ -112,7 +112,6 @@ public class AppUtils {
     public static Uri getImageUri(byte[] image) throws UnsupportedEncodingException {
         byte[] buf = image;
         String mystring = new String(buf, "UTF-8");
-        Uri uri =Uri.parse(mystring);
-        return uri;
+        return Uri.parse(mystring);
     }
 }

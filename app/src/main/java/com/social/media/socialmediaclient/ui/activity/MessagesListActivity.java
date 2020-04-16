@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -51,7 +53,7 @@ public class MessagesListActivity extends AppCompatActivity implements View.OnCl
     private TextView emptyView;
     private RecyclerView recyclerView;
     private MessagesListAdapter messagesListAdapter;
-    private SearchView searchView;
+    private MaterialSearchView searchView;
     private MessageRepository messageRepository;
     ActionMode mActionMode;
     Menu context_menu;
@@ -83,6 +85,7 @@ public class MessagesListActivity extends AppCompatActivity implements View.OnCl
         floatingActionButton.setOnClickListener(this);
 
         emptyView = findViewById(R.id.empty_view);
+        searchView = findViewById(R.id.search_view);
 
         updateTaskList();
     }
@@ -246,7 +249,6 @@ public class MessagesListActivity extends AppCompatActivity implements View.OnCl
         getMenuInflater().inflate(R.menu.searching_menu, menu);
 
         MenuItem item = menu.findItem(R.id.action_search);
-        MaterialSearchView searchView = findViewById(R.id.search_view);
         searchView.setMenuItem(item);
 
         // listening to search query text change
@@ -299,8 +301,8 @@ public class MessagesListActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onBackPressed() {
         // close search view on back button pressed
-        if (!searchView.isIconified()) {
-            searchView.setIconified(true);
+        if (searchView.isSearchOpen()) {
+            searchView.closeSearch();
             return;
         }
         super.onBackPressed();
